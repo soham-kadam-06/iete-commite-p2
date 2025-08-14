@@ -20,7 +20,7 @@ export default function AnimatedBackground() {
     resizeCanvas()
     window.addEventListener("resize", resizeCanvas)
 
-    // Floating particles
+    // Particle system
     const particles: Array<{
       x: number
       y: number
@@ -37,12 +37,10 @@ export default function AnimatedBackground() {
         y: Math.random() * canvas.height,
         vx: (Math.random() - 0.5) * 0.5,
         vy: (Math.random() - 0.5) * 0.5,
-        size: Math.random() * 3 + 1,
+        size: Math.random() * 2 + 1,
         opacity: Math.random() * 0.3 + 0.1,
       })
     }
-
-    let animationId: number
 
     const animate = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height)
@@ -65,14 +63,13 @@ export default function AnimatedBackground() {
         ctx.fill()
       })
 
-      animationId = requestAnimationFrame(animate)
+      requestAnimationFrame(animate)
     }
 
     animate()
 
     return () => {
       window.removeEventListener("resize", resizeCanvas)
-      cancelAnimationFrame(animationId)
     }
   }, [])
 
