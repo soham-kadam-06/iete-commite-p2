@@ -1,3 +1,4 @@
+import Navigation from "@/components/navigation"
 import AnimatedBackground from "@/components/animated-background"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
@@ -8,6 +9,7 @@ export default function EventsPage() {
   return (
     <div className="min-h-screen bg-background text-foreground relative">
       <AnimatedBackground />
+      <Navigation />
 
       <div className="relative z-10">
         {/* Header */}
