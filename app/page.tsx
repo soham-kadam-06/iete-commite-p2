@@ -1,13 +1,15 @@
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
+import AnimatedBackground from "@/components/animated-background"
 import Link from "next/link"
 
 export default function HomePage() {
   return (
     <div className="min-h-screen bg-background">
+      <AnimatedBackground />
       {/* Navigation */}
-      <nav className="border-b bg-card/50 backdrop-blur-sm sticky top-0 z-50">
+      <nav className="relative z-50 border-b bg-card/50 backdrop-blur-sm sticky top-0">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center">
@@ -43,7 +45,7 @@ export default function HomePage() {
       </nav>
 
       {/* Hero Section */}
-      <section className="py-20 px-4">
+      <section className="relative z-10 py-20 px-4">
         <div className="max-w-4xl mx-auto text-center">
           <h1 className="text-4xl md:text-6xl font-bold mb-6">
             Institution of Electronics and Telecommunication Engineers
@@ -64,7 +66,7 @@ export default function HomePage() {
       </section>
 
       {/* Features Section */}
-      <section className="py-20 px-4 bg-card/50">
+      <section className="relative z-10 py-20 px-4 bg-card/50">
         <div className="max-w-6xl mx-auto">
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">Our Core Strengths</h2>
           <div className="grid md:grid-cols-3 gap-8">
@@ -111,7 +113,7 @@ export default function HomePage() {
       </section>
 
       {/* Mission Section */}
-      <section className="py-20 px-4">
+      <section className="relative z-10 py-20 px-4">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-3xl md:text-4xl font-bold mb-8">Our Mission</h2>
           <p className="text-lg text-muted-foreground mb-8">
