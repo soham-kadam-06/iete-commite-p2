@@ -1,21 +1,81 @@
+"use client"
+
+import { useState } from "react"
 import Navigation from "@/components/navigation"
 import AnimatedBackground from "@/components/animated-background"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { Calendar, MapPin, Users, Clock, Heart, MessageCircle } from "lucide-react"
+import { Calendar, MapPin, Users, Clock, Heart, MessageCircle, X, ChevronLeft, ChevronRight } from "lucide-react"
 
 export default function EventsPage() {
+  const [selectedGallery, setSelectedGallery] = useState<string | null>(null)
+  const [currentImageIndex, setCurrentImageIndex] = useState(0)
+
+  const eventGalleries = {
+    "tech-fest-2025": [
+      "https://images.pexels.com/photos/1181263/pexels-photo-1181263.jpeg?auto=compress&cs=tinysrgb&w=800",
+      "https://images.pexels.com/photos/1181298/pexels-photo-1181298.jpeg?auto=compress&cs=tinysrgb&w=800",
+      "https://images.pexels.com/photos/1181316/pexels-photo-1181316.jpeg?auto=compress&cs=tinysrgb&w=800",
+      "https://images.pexels.com/photos/1181354/pexels-photo-1181354.jpeg?auto=compress&cs=tinysrgb&w=800",
+      "https://images.pexels.com/photos/1181396/pexels-photo-1181396.jpeg?auto=compress&cs=tinysrgb&w=800",
+      "https://images.pexels.com/photos/1181435/pexels-photo-1181435.jpeg?auto=compress&cs=tinysrgb&w=800"
+    ],
+    "industry-connect": [
+      "https://images.pexels.com/photos/1181677/pexels-photo-1181677.jpeg?auto=compress&cs=tinysrgb&w=800",
+      "https://images.pexels.com/photos/1181715/pexels-photo-1181715.jpeg?auto=compress&cs=tinysrgb&w=800",
+      "https://images.pexels.com/photos/1181772/pexels-photo-1181772.jpeg?auto=compress&cs=tinysrgb&w=800",
+      "https://images.pexels.com/photos/1181804/pexels-photo-1181804.jpeg?auto=compress&cs=tinysrgb&w=800"
+    ],
+    "ai-ml-conference": [
+      "https://images.pexels.com/photos/3861958/pexels-photo-3861958.jpeg?auto=compress&cs=tinysrgb&w=800",
+      "https://images.pexels.com/photos/3861972/pexels-photo-3861972.jpeg?auto=compress&cs=tinysrgb&w=800",
+      "https://images.pexels.com/photos/8386440/pexels-photo-8386440.jpeg?auto=compress&cs=tinysrgb&w=800",
+      "https://images.pexels.com/photos/8386434/pexels-photo-8386434.jpeg?auto=compress&cs=tinysrgb&w=800",
+      "https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=800"
+    ],
+    "innovation-expo": [
+      "https://images.pexels.com/photos/2004161/pexels-photo-2004161.jpeg?auto=compress&cs=tinysrgb&w=800",
+      "https://images.pexels.com/photos/2004162/pexels-photo-2004162.jpeg?auto=compress&cs=tinysrgb&w=800",
+      "https://images.pexels.com/photos/2004164/pexels-photo-2004164.jpeg?auto=compress&cs=tinysrgb&w=800",
+      "https://images.pexels.com/photos/2004165/pexels-photo-2004165.jpeg?auto=compress&cs=tinysrgb&w=800"
+    ]
+  }
+
+  const openGallery = (galleryId: string) => {
+    setSelectedGallery(galleryId)
+    setCurrentImageIndex(0)
+  }
+
+  const closeGallery = () => {
+    setSelectedGallery(null)
+    setCurrentImageIndex(0)
+  }
+
+  const nextImage = () => {
+    if (selectedGallery) {
+      const gallery = eventGalleries[selectedGallery as keyof typeof eventGalleries]
+      setCurrentImageIndex((prev) => (prev + 1) % gallery.length)
+    }
+  }
+
+  const prevImage = () => {
+    if (selectedGallery) {
+      const gallery = eventGalleries[selectedGallery as keyof typeof eventGalleries]
+      setCurrentImageIndex((prev) => (prev - 1 + gallery.length) % gallery.length)
+    }
+  }
+
   return (
-    <div className="min-h-screen bg-background text-foreground relative">
+    <div className="min-h-screen relative">
       <AnimatedBackground />
       <Navigation />
 
-      <div className="relative z-10">
-        {/* Header */}
+      <main className="relative z-10 pt-16">
+        {/* Hero Section */}
         <section className="py-20 px-4 text-center">
           <div className="max-w-4xl mx-auto">
-            <h1 className="text-4xl md:text-6xl font-bold mb-6">IETE Events</h1>
+            <h1 className="text-4xl md:text-6xl font-bold mb-6 text-primary">IETE Events</h1>
             <p className="text-xl text-muted-foreground mb-8">
               Discover upcoming events, relive memories, and explore our rich history of technical excellence
             </p>
@@ -113,9 +173,10 @@ export default function EventsPage() {
             <div className="grid md:grid-cols-2 gap-8">
               {[
                 {
+                  id: "tech-fest-2025",
                   title: "Annual Tech Fest 2025",
                   description: "Share your memories from our biggest tech celebration",
-                  image: "/placeholder.svg?height=300&width=400&text=Tech+Fest+2025",
+                  image: "https://images.pexels.com/photos/1181263/pexels-photo-1181263.jpeg?auto=compress&cs=tinysrgb&w=400",
                   likes: 124,
                   comments: 18,
                   memories: [
@@ -125,9 +186,10 @@ export default function EventsPage() {
                   ],
                 },
                 {
+                  id: "industry-connect",
                   title: "Industry Connect Seminar",
                   description: "Professional insights and career guidance session",
-                  image: "/placeholder.svg?height=300&width=400&text=Industry+Connect",
+                  image: "https://images.pexels.com/photos/1181677/pexels-photo-1181677.jpeg?auto=compress&cs=tinysrgb&w=400",
                   likes: 89,
                   comments: 12,
                   memories: ["Learned so much about industry trends", "Great Q&A session", "Valuable career advice"],
@@ -136,9 +198,10 @@ export default function EventsPage() {
                 <Card key={index} className="overflow-hidden">
                   <div className="aspect-video bg-muted">
                     <img
-                      src={event.image || "/placeholder.svg"}
+                      src={event.image}
                       alt={event.title}
-                      className="w-full h-full object-cover"
+                      className="w-full h-full object-cover cursor-pointer hover:scale-105 transition-transform"
+                      onClick={() => openGallery(event.id)}
                     />
                   </div>
                   <CardHeader>
@@ -165,9 +228,18 @@ export default function EventsPage() {
                           </p>
                         ))}
                       </div>
-                      <Button variant="outline" className="w-full bg-transparent">
-                        Share Your Memory
-                      </Button>
+                      <div className="flex gap-2">
+                        <Button variant="outline" className="flex-1 bg-transparent">
+                          Share Your Memory
+                        </Button>
+                        <Button 
+                          variant="outline" 
+                          className="bg-transparent"
+                          onClick={() => openGallery(event.id)}
+                        >
+                          View Gallery
+                        </Button>
+                      </div>
                     </div>
                   </CardContent>
                 </Card>
@@ -183,6 +255,7 @@ export default function EventsPage() {
             <div className="space-y-12">
               {[
                 {
+                  id: "ai-ml-conference",
                   title: "AI & Machine Learning Conference",
                   date: "December 10, 2024",
                   location: "Main Campus",
@@ -194,12 +267,13 @@ export default function EventsPage() {
                     "Networking session with industry experts",
                   ],
                   images: [
-                    "/placeholder.svg?height=200&width=300&text=AI+Conference+1",
-                    "/placeholder.svg?height=200&width=300&text=AI+Conference+2",
-                    "/placeholder.svg?height=200&width=300&text=AI+Conference+3",
+                    "https://images.pexels.com/photos/3861958/pexels-photo-3861958.jpeg?auto=compress&cs=tinysrgb&w=300",
+                    "https://images.pexels.com/photos/3861972/pexels-photo-3861972.jpeg?auto=compress&cs=tinysrgb&w=300",
+                    "https://images.pexels.com/photos/8386440/pexels-photo-8386440.jpeg?auto=compress&cs=tinysrgb&w=300",
                   ],
                 },
                 {
+                  id: "innovation-expo",
                   title: "Electronics Innovation Expo",
                   date: "October 15, 2024",
                   location: "Exhibition Hall",
@@ -211,9 +285,9 @@ export default function EventsPage() {
                     "Technology transfer opportunities",
                   ],
                   images: [
-                    "/placeholder.svg?height=200&width=300&text=Innovation+Expo+1",
-                    "/placeholder.svg?height=200&width=300&text=Innovation+Expo+2",
-                    "/placeholder.svg?height=200&width=300&text=Innovation+Expo+3",
+                    "https://images.pexels.com/photos/2004161/pexels-photo-2004161.jpeg?auto=compress&cs=tinysrgb&w=300",
+                    "https://images.pexels.com/photos/2004162/pexels-photo-2004162.jpeg?auto=compress&cs=tinysrgb&w=300",
+                    "https://images.pexels.com/photos/2004164/pexels-photo-2004164.jpeg?auto=compress&cs=tinysrgb&w=300",
                   ],
                 },
               ].map((event, index) => (
@@ -250,14 +324,25 @@ export default function EventsPage() {
                         </ul>
                       </div>
                       <div>
-                        <h4 className="font-semibold mb-3">Event Gallery:</h4>
+                        <div className="flex items-center justify-between mb-3">
+                          <h4 className="font-semibold">Event Gallery:</h4>
+                          <Button 
+                            variant="outline" 
+                            size="sm" 
+                            className="bg-transparent"
+                            onClick={() => openGallery(event.id)}
+                          >
+                            View All
+                          </Button>
+                        </div>
                         <div className="grid grid-cols-2 gap-2">
-                          {event.images.map((image, imgIndex) => (
+                          {event.images.slice(0, 4).map((image, imgIndex) => (
                             <div key={imgIndex} className="aspect-video bg-muted rounded-lg overflow-hidden">
                               <img
-                                src={image || "/placeholder.svg"}
+                                src={image}
                                 alt={`${event.title} ${imgIndex + 1}`}
                                 className="w-full h-full object-cover hover:scale-105 transition-transform cursor-pointer"
+                                onClick={() => openGallery(event.id)}
                               />
                             </div>
                           ))}
@@ -270,7 +355,73 @@ export default function EventsPage() {
             </div>
           </div>
         </section>
-      </div>
+
+        {/* Gallery Modal */}
+        {selectedGallery && (
+          <div className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4">
+            <div className="relative max-w-4xl w-full">
+              {/* Close button */}
+              <Button
+                variant="ghost"
+                size="icon"
+                className="absolute -top-12 right-0 text-white hover:bg-white/20"
+                onClick={closeGallery}
+              >
+                <X className="h-6 w-6" />
+              </Button>
+
+              {/* Image container */}
+              <div className="relative bg-card rounded-lg overflow-hidden">
+                <img
+                  src={eventGalleries[selectedGallery as keyof typeof eventGalleries][currentImageIndex]}
+                  alt={`Gallery image ${currentImageIndex + 1}`}
+                  className="w-full h-auto max-h-[70vh] object-contain"
+                />
+
+                {/* Navigation buttons */}
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-black/50 text-white hover:bg-black/70"
+                  onClick={prevImage}
+                >
+                  <ChevronLeft className="h-6 w-6" />
+                </Button>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-black/50 text-white hover:bg-black/70"
+                  onClick={nextImage}
+                >
+                  <ChevronRight className="h-6 w-6" />
+                </Button>
+
+                {/* Image counter */}
+                <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-black/70 text-white px-3 py-1 rounded-full text-sm">
+                  {currentImageIndex + 1} / {eventGalleries[selectedGallery as keyof typeof eventGalleries].length}
+                </div>
+              </div>
+
+              {/* Thumbnail strip */}
+              <div className="flex gap-2 mt-4 justify-center overflow-x-auto pb-2">
+                {eventGalleries[selectedGallery as keyof typeof eventGalleries].map((image, index) => (
+                  <img
+                    key={index}
+                    src={image}
+                    alt={`Thumbnail ${index + 1}`}
+                    className={`w-16 h-16 object-cover rounded cursor-pointer transition-all ${
+                      index === currentImageIndex 
+                        ? 'ring-2 ring-primary scale-110' 
+                        : 'opacity-70 hover:opacity-100'
+                    }`}
+                    onClick={() => setCurrentImageIndex(index)}
+                  />
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
+      </main>
     </div>
   )
 }
